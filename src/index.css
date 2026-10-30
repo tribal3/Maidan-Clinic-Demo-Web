@@ -1,0 +1,251 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Work Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-display: 'Newsreader', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-arabic: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+
+  --color-teal: #0b3b3d;
+  --color-teal-deep: #052526;
+  --color-sea: #15625e;
+  --color-sea-dark: #0f4c49;
+  --color-sand: #c5a97a;
+  --color-sand-soft: #f0e7d6;
+  --color-mist: #f7f5f0;
+  --color-ink: #0a2b2d;
+  --color-ink-soft: #5b6a68;
+  --color-line: #e4e0d5;
+  --color-mint: #e7efe9;
+
+  --shadow-soft: 0 40px 90px -50px rgba(5, 37, 38, 0.5);
+  --shadow-card: 0 24px 60px -42px rgba(5, 37, 38, 0.45);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.002em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    color: var(--color-teal);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-sand-soft);
+    color: var(--color-teal);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sea);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  section[id] {
+    scroll-margin-top: 92px;
+  }
+
+  img {
+    color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------- Arabic / RTL typography ---------- */
+
+html[lang='ar'] body {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
+html[lang='ar'] h1,
+html[lang='ar'] h2,
+html[lang='ar'] h3,
+html[lang='ar'] h4,
+html[lang='ar'] .font-display {
+  font-family: var(--font-arabic);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+html[lang='ar'] h1 {
+  line-height: 1.32;
+}
+
+html[lang='ar'] h2,
+html[lang='ar'] h3 {
+  line-height: 1.42;
+}
+
+html[lang='ar'] .hero-title {
+  font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+}
+
+html[lang='ar'] .eyebrow,
+html[lang='ar'] .micro-label {
+  letter-spacing: 0.02em;
+}
+
+html[lang='ar'] .accent-italic {
+  font-style: normal;
+}
+
+/* ---------- Reusable details ---------- */
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+
+html[lang='ar'] .eyebrow {
+  text-transform: none;
+  font-size: 0.75rem;
+}
+
+@utility micro-label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+html[lang='ar'] .micro-label {
+  text-transform: none;
+  font-size: 0.6875rem;
+}
+
+/* Official Maidan lockup used as a tintable mask. */
+.logo-mark {
+  background-color: currentColor;
+  -webkit-mask-image: url('/images/maidan-logo.png');
+  mask-image: url('/images/maidan-logo.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.drawer-backdrop {
+  animation: overlay-in 0.3s ease-out both;
+}
+
+.drawer-panel {
+  animation: drawer-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dialog-panel {
+  animation: dialog-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Drawer scrollbar ---------- */
+
+.drawer-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sand-soft) transparent;
+}
